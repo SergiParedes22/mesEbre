@@ -3,6 +3,7 @@ import '../style.css';
 import Modal from 'react-modal';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import { ModalBody, ModalFooter } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 //import ModalButt from './ModalButt';
 
@@ -30,6 +31,8 @@ const ItemListado = (props) => {
     }
   };
 
+  
+
   var subtitle;
   const [modalIsOpen,setIsOpen] = useState(false);
   function openModal() {
@@ -45,44 +48,51 @@ const ItemListado = (props) => {
     setIsOpen(false);
   }
 
-
+//place just before modal  
+//<button className="modalOb" onClick={openModal} style={{borderRadius:'4px', backgroundColor:'lightblue'}}>Ves a la notícia!</button>
 
   
   return (
         
-    <div style={{ float: 'left' }} className="card col-md-6 " >
-      <img className="card-img-top " style={{ width: '90%', marginLeft: '5%' }} src={noticia.thumb} alt={noticia.titulo} />
+    <div style={{ display:'inline-flex'}} className="card col-md-6 " >
+      
+      <img className="card-img-top " onClick={openModal} style={{ width: '90%', marginLeft: '5%' }} src={noticia.thumb} alt={noticia.titulo} />
         <div className="card-body">
-          <h2 className="card-title">{noticia.titulo}</h2>
+          <Link className="card-title" onClick={openModal}>{noticia.titulo}</Link>
+          <br></br>
             <em>{noticia.fecha}</em>
             <div>
-        <button onClick={openModal} style={{borderRadius:'4px', backgroundColor:'lightblue'}}>Ves a la notícia!</button>
+        
         <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
           style={customStyles}
-          width="800"
-          height="600"
           effect="fadeInUp"
           scrollable={true}
         >
+          <div>
+          <button onClick={closeModal} style={{display:'flex', borderRadius:'20px', float:'right', backgroundColor:'lightblue', position:'relative'}}>Tanca X</button>
+          </div>
  
           <ModalHeader>
-          <h3 ref={_subtitle => (subtitle = _subtitle)}>{noticia.titulo}</h3>
-          <h4>{noticia.fecha}</h4>
+            <div>
+              <h3 ref={_subtitle => (subtitle = _subtitle)}>{noticia.titulo}</h3>
+              <h3>{noticia.fecha}</h3>
+              <img className="img-modal" style={{ marginLeft:'auto', marginRight:'auto'}} src={noticia.thumb} alt={noticia.titulo}></img>
+            </div>
+         
           </ModalHeader>
           <ModalBody>
           <div style={{display:'flex'}}>
-          <p>{noticia.contenido}</p>
-          <img style={{ width: '20%', marginLeft: '30%', alignItems: 'center', display:'flex'}} src={noticia.thumb} alt={noticia.titulo}></img>
+          <p >{noticia.contenido}</p>
             
           </div>
-            
-  
           </ModalBody>
           <ModalFooter>
-          <img className="logo" alt="Logo" style={{ width: '20%',  alignItems: 'center'}} src="http://www.mesebre.cat/img/logo-mesebre.png" />
+          <a href="#top">
+            <img className="logo" alt="Logo" style={{ position:'static', width: '20%',  alignItems: 'center', display:'inline-flex' }} src="http://www.mesebre.cat/img/logo-mesebre.png" />
+          </a>
           </ModalFooter>
         </Modal>
       </div>
